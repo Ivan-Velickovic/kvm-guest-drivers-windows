@@ -106,6 +106,15 @@ static void DebugPrintFunc(const char *format, ...)
 }
 #endif
 
+static void DebugPrintEverything(const char *format, ...)
+{
+    va_list list;
+    va_start(list, format);
+    DebugPrintFuncSerial(foramt, list);
+    DebugPrintFunc(foramt, list);
+    va_end(list);
+}
+
 static void DebugPrintFuncWPP(const char *format, ...)
 {
     // TODO later, if needed
@@ -123,14 +132,15 @@ void InitializeDebugPrints(IN PDRIVER_OBJECT DriverObject, PUNICODE_STRING Regis
 
     DebugPrintFuncSerial("TS: VIOSTOR DEBUG PRINT\n");
 
-#if defined(PRINT_DEBUG)
-    VirtioDebugPrintProc = DebugPrintFunc;
-#elif defined(COM_DEBUG)
-    VirtioDebugPrintProc = DebugPrintFuncSerial;
-#else
-    VirtioDebugPrintProc = NoDebugPrintFunc;
-#endif
-}
+    VirtioDebugPrintProc = DebugPrintEverything;
+// #if defined(PRINT_DEBUG)
+//     VirtioDebugPrintProc = DebugPrintFunc;
+// #elif defined(COM_DEBUG)
+//     VirtioDebugPrintProc = DebugPrintFuncSerial;
+// #else
+//     VirtioDebugPrintProc = NoDebugPrintFunc;
+// #endif
+// }
 
 tDebugPrintFunc VirtioDebugPrintProc;
 #else
