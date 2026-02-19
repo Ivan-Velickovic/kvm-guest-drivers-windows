@@ -138,6 +138,7 @@ DriverEntry(IN PVOID DriverObject, IN PVOID RegistryPath)
     HW_INITIALIZATION_DATA hwInitData;
     ULONG initResult;
 
+    #define RHEL_DEBUG_PORT  ((PUCHAR)0x3F8)
     char *init_buf = "DriverEntry called\n";
     WRITE_PORT_BUFFER_UCHAR(RHEL_DEBUG_PORT, (PUCHAR)init_buf, sizeof(init_buf) / sizeof(char));
 
