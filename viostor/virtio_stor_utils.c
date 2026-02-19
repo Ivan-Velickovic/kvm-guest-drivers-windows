@@ -41,6 +41,34 @@ int nViostorDebugLevel;
 #define RHEL_DEBUG_PORT  ((PUCHAR)0x3F8)
 #define TEMP_BUFFER_SIZE 256
 
+static inline uint8_t in8(uint16_t port)
+{
+    uint8_t ret;
+    __asm__ volatile ( "inb %w1, %b0"
+                   : "=a"(ret)
+                   : "Nd"(port)
+                   : "memory");
+    return ret;
+}
+
+static inline void outb(uint16_t port, uint8_t val)
+{
+    __asm__ volatile ( "outb %b0, %w1" : : "a"(val), "Nd"(port) : "memory");
+}
+
+static void debug_port_out(unsigned char c)
+{
+    while ((in8(RHEL_DEBUG_PORT + 5) & 0x20) == 0);
+    out8(RHEL_DEBUG_PORT, c);
+}
+
+static void debug_port_print(char *s, size_t len)
+{
+    for (int i = 0; i < len; i++) {
+        debug_port_out(s[i]);
+    }
+}
+
 static void DebugPrintFuncSerial(const char *format, ...)
 {
     char buf[TEMP_BUFFER_SIZE];
@@ -61,8 +89,8 @@ static void DebugPrintFuncSerial(const char *format, ...)
     }
     if (len)
     {
-        WRITE_PORT_BUFFER_UCHAR(RHEL_DEBUG_PORT, (PUCHAR)buf, len);
-        WRITE_PORT_UCHAR(RHEL_DEBUG_PORT, '\r');
+        debug_port_print(buf, len);
+        debug_port_out('\r');
     }
     va_end(list);
 }
