@@ -93,6 +93,8 @@ void InitializeDebugPrints(IN PDRIVER_OBJECT DriverObject, PUNICODE_STRING Regis
     virtioDebugLevel = 0;
     nViostorDebugLevel = TRACE_LEVEL_VERBOSE; // TRACE_LEVEL_VERBOSE;//
 
+    DebugPrintFuncSerial("TS: VIOSTOR DEBUG PRINT\n");
+
 #if defined(PRINT_DEBUG)
     VirtioDebugPrintProc = DebugPrintFunc;
 #elif defined(COM_DEBUG)
