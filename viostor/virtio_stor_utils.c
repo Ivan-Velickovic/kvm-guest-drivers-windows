@@ -51,7 +51,7 @@ static inline uint8_t in8(uint16_t port)
     return ret;
 }
 
-static inline void outb(uint16_t port, uint8_t val)
+static inline void out8(uint16_t port, uint8_t val)
 {
     __asm__ volatile ( "outb %b0, %w1" : : "a"(val), "Nd"(port) : "memory");
 }
@@ -110,8 +110,8 @@ static void DebugPrintEverything(const char *format, ...)
 {
     va_list list;
     va_start(list, format);
-    DebugPrintFuncSerial(foramt, list);
-    DebugPrintFunc(foramt, list);
+    DebugPrintFuncSerial(format, list);
+    DebugPrintFunc(format, list);
     va_end(list);
 }
 
@@ -140,7 +140,7 @@ void InitializeDebugPrints(IN PDRIVER_OBJECT DriverObject, PUNICODE_STRING Regis
 // #else
 //     VirtioDebugPrintProc = NoDebugPrintFunc;
 // #endif
-// }
+}
 
 tDebugPrintFunc VirtioDebugPrintProc;
 #else
