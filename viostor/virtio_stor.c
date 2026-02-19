@@ -139,8 +139,12 @@ DriverEntry(IN PVOID DriverObject, IN PVOID RegistryPath)
     ULONG initResult;
 
     #define RHEL_DEBUG_PORT  ((PUCHAR)0x3F8)
+    #define RHEL_DEBUG_PORT1  ((PUCHAR)0x3E8)
+    #define RHEL_DEBUG_PORT2 ((PUCHAR)0x2E8)
     char *init_buf = "DriverEntry called\n";
     WRITE_PORT_BUFFER_UCHAR(RHEL_DEBUG_PORT, (PUCHAR)init_buf, sizeof(init_buf) / sizeof(char));
+    WRITE_PORT_BUFFER_UCHAR(RHEL_DEBUG_PORT1, (PUCHAR)init_buf, sizeof(init_buf) / sizeof(char));
+    WRITE_PORT_BUFFER_UCHAR(RHEL_DEBUG_PORT2, (PUCHAR)init_buf, sizeof(init_buf) / sizeof(char));
 
 #ifdef EVENT_TRACING
     STORAGE_TRACE_INIT_INFO initInfo;
