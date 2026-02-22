@@ -305,7 +305,7 @@ VirtIoFindAdapter(IN PVOID DeviceExtension,
         return SP_RETURN_ERROR;
     }
 
-    for (int i = 0; i < pci_cfg_len; i++) {
+    for (ULONG i = 0; i < pci_cfg_len; i++) {
         RhelDbgPrint(TRACE_LEVEL_FATAL, "   pci_config_buf[%d]: 0x%x\n", i, adaptExt->pci_config_buf[i]);
     }
 
