@@ -288,6 +288,10 @@ VirtIoFindAdapter(IN PVOID DeviceExtension,
     ConfigInfo->HwMSInterruptRoutine = VirtIoMSInterruptRoutine;
     ConfigInfo->InterruptSynchronizationMode = InterruptSynchronizePerMessage;
 
+    RhelDbgPrint(TRACE_LEVEL_FATAL, " SystemIoBusNumber: 0x%x\n", ConfigInfo->SystemIoBusNumber);
+    RhelDbgPrint(TRACE_LEVEL_FATAL, " SlotNumber: 0x%x\n", ConfigInfo->SlotNumber);
+    RhelDbgPrint(TRACE_LEVEL_FATAL, " Call to StorPortGetBusData\n");
+
     pci_cfg_len = StorPortGetBusData(DeviceExtension,
                                      PCIConfiguration,
                                      ConfigInfo->SystemIoBusNumber,
@@ -299,6 +303,10 @@ VirtIoFindAdapter(IN PVOID DeviceExtension,
     {
         RhelDbgPrint(TRACE_LEVEL_FATAL, " CANNOT READ PCI CONFIGURATION SPACE %d\n", pci_cfg_len);
         return SP_RETURN_ERROR;
+    }
+
+    for (int i = 0; i < pci_cfg_len; i++) {
+        RhelDbgPrint(TRACE_LEVEL_FATAL, "   pci_config_buf[%d]: 0x%x\n", i, adaptExt->pci_config_buf[i]);
     }
 
     /* initialize the pci_bars array */
