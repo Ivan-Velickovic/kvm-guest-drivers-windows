@@ -318,6 +318,12 @@ VirtIoFindAdapter(IN PVOID DeviceExtension,
             adaptExt->pci_bars[iBar].bPortSpace = !accessRange->RangeInMemory;
         }
     }
+    {
+        RhelDbgPrint(TRACE_LEVEL_FATAL, " pci_config->vendor_id: 0x%hx\n", adaptExt->pci_config.VendorId);
+        RhelDbgPrint(TRACE_LEVEL_FATAL, " pci_config->device_id: 0x%hx\n", adaptExt->pci_config.DeviceId);
+        RhelDbgPrint(TRACE_LEVEL_FATAL, " pci_config->command: 0x%hx\n", adaptExt->pci_config.Command);
+        RhelDbgPrint(TRACE_LEVEL_FATAL, " pci_config->status: 0x%hx\n", adaptExt->pci_config.Status);
+    }
 
     adaptExt->msix_enabled = FALSE;
     {
