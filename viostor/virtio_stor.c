@@ -305,7 +305,7 @@ VirtIoFindAdapter(IN PVOID DeviceExtension,
         return SP_RETURN_ERROR;
     }
 
-    for (ULONG i = 0; i < pci_cfg_len; i++) {
+    for (i = 0; i < pci_cfg_len; i++) {
         RhelDbgPrint(TRACE_LEVEL_FATAL, "   pci_config_buf[%lu]: 0x%x\n", i, adaptExt->pci_config_buf[i]);
     }
 
@@ -2216,7 +2216,7 @@ VOID VioStorCompleteRequest(IN PVOID DeviceExtension, IN ULONG MessageID, IN BOO
     UCHAR srbStatus = SRB_STATUS_SUCCESS;
     PREQUEST_LIST element = NULL;
 
-    RhelDbgPrint(TRACE_LEVEL_VERBOSE, " ---> MessageID 0x%x\n", MessageID);
+    RhelDbgPrint(TRACE_LEVEL_VERBOSE, " ---> MessageID 0x%lx\n", MessageID);
 
     VioStorVQLock(DeviceExtension, MessageID, &queueLock, bIsr);
 
@@ -2236,7 +2236,7 @@ VOID VioStorCompleteRequest(IN PVOID DeviceExtension, IN ULONG MessageID, IN BOO
     {
         RhelDbgPrint(TRACE_LEVEL_ERROR, "VioStorCompleteRequest RESET ALREADY IN PROGRESS !!!!\n");
         VioStorVQUnlock(DeviceExtension, MessageID, &queueLock, bIsr);
-        RhelDbgPrint(TRACE_LEVEL_VERBOSE, " <--- MessageID 0x%x\n", MessageID);
+        RhelDbgPrint(TRACE_LEVEL_VERBOSE, " <--- MessageID 0x%lx\n", MessageID);
 
         return;
     }
