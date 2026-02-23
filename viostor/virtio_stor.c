@@ -2088,6 +2088,7 @@ VOID CompleteRequestWithStatus(IN PVOID DeviceExtension, IN PSRB_TYPE Srb, IN UC
     }
     SRB_SET_SRB_STATUS(Srb, status);
     CompleteSRB(DeviceExtension, Srb);
+    RhelDbgPrint(TRACE_LEVEL_VERBOSE, "CompleteRequestWithStatus 0x%x\n", status);
 }
 
 VOID FORCEINLINE DeviceChangeNotification(IN PVOID DeviceExtension, IN BOOLEAN bLun)

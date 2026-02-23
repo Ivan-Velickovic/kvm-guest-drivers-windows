@@ -106,7 +106,7 @@ void InitializeDebugPrints(IN PDRIVER_OBJECT DriverObject, PUNICODE_STRING Regis
 
     DebugPrintFuncSerial("TS: VIOSTOR DEBUG PRINT\n");
 
-    VirtioDebugPrintProc = DebugPrintEverything;
+    VirtioDebugPrintProc = DebugPrintFuncSerial;
 // #if defined(PRINT_DEBUG)
 //     VirtioDebugPrintProc = DebugPrintFunc;
 // #elif defined(COM_DEBUG)
