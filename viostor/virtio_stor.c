@@ -1296,6 +1296,7 @@ VirtIoInterrupt(IN PVOID DeviceExtension)
         return FALSE;
     }
     intReason = virtio_read_isr_status(&adaptExt->vdev);
+    RhelDbgPrint(TRACE_LEVEL_INFORMATION, "intReason: %lu\n", intReason);
     if (intReason & 0x1 || adaptExt->dump_mode)
     {
         RhelDbgPrint(TRACE_LEVEL_INFORMATION, "Processing IRQ\n");
