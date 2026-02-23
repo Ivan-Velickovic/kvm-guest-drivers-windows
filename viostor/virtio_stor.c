@@ -342,6 +342,10 @@ VirtIoFindAdapter(IN PVOID DeviceExtension,
         if ((pPciComHeader->Status & PCI_STATUS_CAPABILITIES_LIST) == 0)
         {
             RhelDbgPrint(TRACE_LEVEL_FATAL, " NO CAPABILITIES_LIST\n");
+            RhelDbgPrint(TRACE_LEVEL_FATAL, " pci_config->vendor_id: 0x%x\n", pPciComHeader->VendorID);
+            RhelDbgPrint(TRACE_LEVEL_FATAL, " pci_config->device_id: 0x%x\n", pPciComHeader->DeviceID);
+            RhelDbgPrint(TRACE_LEVEL_FATAL, " pci_config->command: 0x%x\n", pPciComHeader->Command);
+            RhelDbgPrint(TRACE_LEVEL_FATAL, " pci_config->status: 0x%x\n", pPciComHeader->Status);
         }
         else
         {
