@@ -418,11 +418,14 @@ VirtIoFindAdapter(IN PVOID DeviceExtension,
     RhelDbgPrint(TRACE_LEVEL_INFORMATION, " VIRTIO_BLK_F_WCACHE = %d\n", ConfigInfo->CachesData);
     RhelDbgPrint(TRACE_LEVEL_INFORMATION, " VIRTIO_BLK_F_MQ = %d\n", CHECKBIT(adaptExt->features, VIRTIO_BLK_F_MQ));
 
+    RhelDbgPrint(TRACE_LEVEL_INFORMATION, " FEATURES = %llu\n", adaptExt->features);
+
     virtio_query_queue_allocation(&adaptExt->vdev,
                                   0,
                                   &queueLength,
                                   &adaptExt->pageAllocationSize,
                                   &adaptExt->poolAllocationSize);
+    RhelDbgPrint(TRACE_LEVEL_INFORMATION, " QUEUE LENGTH = %u\n", queueLength);
 
     if (!adaptExt->dump_mode)
     {
@@ -447,6 +450,7 @@ VirtIoFindAdapter(IN PVOID DeviceExtension,
         ConfigInfo->NumberOfPhysicalBreaks = max(SCSI_MINIMUM_PHYSICAL_BREAKS, (queueLength / 4));
         adaptExt->queue_depth = max(((queueLength / ConfigInfo->NumberOfPhysicalBreaks) - 1), 1);
     }
+    RhelDbgPrint(TRACE_LEVEL_INFORMATION, " ConfigInfo->NumberOfPhysicalBreaks = %lu\n", ConfigInfo->NumberOfPhysicalBreaks);
     if (CHECKBIT(adaptExt->features, VIRTIO_BLK_F_SEG_MAX))
     {
         ULONG size_max = adaptExt->info.size_max;
@@ -1289,7 +1293,7 @@ VirtIoInterrupt(IN PVOID DeviceExtension)
 
     adaptExt = (PADAPTER_EXTENSION)DeviceExtension;
 
-    RhelDbgPrint(TRACE_LEVEL_VERBOSE, " IRQL (%d)\n", KeGetCurrentIrql());
+    RhelDbgPrint(TRACE_LEVEL_VERBOSE, "VirtIoInterrupt: IRQL (%d)\n", KeGetCurrentIrql());
     if (adaptExt->removed == TRUE || adaptExt->stopped == TRUE)
     {
         RhelDbgPrint(TRACE_LEVEL_ERROR, " Interrupt on removed or stopped device)");
