@@ -1298,8 +1298,10 @@ VirtIoInterrupt(IN PVOID DeviceExtension)
     intReason = virtio_read_isr_status(&adaptExt->vdev);
     if (intReason & 0x1 || adaptExt->dump_mode)
     {
+        RhelDbgPrint(TRACE_LEVEL_INFORMATION, "Processing IRQ\n");
         if (!CompleteDPC(DeviceExtension, adaptExt->msix_has_config_vector))
         {
+            RhelDbgPrint(TRACE_LEVEL_INFORMATION, "Processing IRQ, calling VioStorCompleteRequest\n");
             VioStorCompleteRequest(DeviceExtension, adaptExt->msix_has_config_vector, TRUE);
         }
         isInterruptServiced = TRUE;
@@ -2351,15 +2353,18 @@ VOID VioStorCompleteRequest(IN PVOID DeviceExtension, IN ULONG MessageID, IN BOO
                              MessageID);
                 if (srbExt && srbExt->fua == TRUE)
                 {
+                    RhelDbgPrint(TRACE_LEVEL_INFORMATION, "SRB_STATUS_PENDING\n");
                     SRB_SET_SRB_STATUS(Srb, SRB_STATUS_PENDING);
                     if (!RhelDoFlush(DeviceExtension, Srb, TRUE, bIsr))
                     {
+                        RhelDbgPrint(TRACE_LEVEL_INFORMATION, "SRB_STATUS_ERROR\n");
                         CompleteRequestWithStatus(DeviceExtension, (PSRB_TYPE)Srb, SRB_STATUS_ERROR);
                     }
                     srbExt->fua = FALSE;
                 }
                 else
                 {
+                    RhelDbgPrint(TRACE_LEVEL_INFORMATION, "srbStatus: 0x%x\n", srbStatus);
                     CompleteRequestWithStatus(DeviceExtension, (PSRB_TYPE)Srb, srbStatus);
                 }
             }
