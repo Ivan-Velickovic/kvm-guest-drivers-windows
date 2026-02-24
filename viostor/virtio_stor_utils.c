@@ -102,7 +102,7 @@ void InitializeDebugPrints(IN PDRIVER_OBJECT DriverObject, PUNICODE_STRING Regis
     // TBD - Read nDebugLevel and bDebugPrint from the registry
     bDebugPrint = 1;
     virtioDebugLevel = 0xff;
-    nViostorDebugLevel = TRACE_LEVEL_INFORMATION; // TRACE_LEVEL_VERBOSE;//
+    nViostorDebugLevel = TRACE_LEVEL_WARNING; // TRACE_LEVEL_VERBOSE;//
 
     DebugPrintFuncSerial("TS: VIOSTOR DEBUG PRINT\n");
 
