@@ -72,7 +72,7 @@ static ULONG GetSrbQueueNumber(IN PVOID DeviceExtension, IN PSRB_TYPE Srb)
     {
         QueueNumber = (param.MessageNumber - 1) % adaptExt->num_queues;
     }
-    RhelDbgPrint(TRACE_LEVEL_INFORMATION,
+    RhelDbgPrint(TRACE_LEVEL_VERBOSE,
                  " srb %p, MessageNumber %lu, ChannelNumber %lu -> QueueNumber %lu\n",
                  Srb,
                  param.MessageNumber,
