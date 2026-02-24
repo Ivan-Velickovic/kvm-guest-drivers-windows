@@ -458,11 +458,15 @@ VirtIoFindAdapter(IN PVOID DeviceExtension,
         if ((size_max > 0) && (seg_max > 0))
         {
             seg_max = (ULONG)((ULONGLONG)seg_max * size_max) / (ROUND_TO_PAGES(size_max));
-            ConfigInfo->NumberOfPhysicalBreaks = seg_max - 1;
+            ConfigInfo->NumberOfPhysicalBreaks = max(seg_max - 1, 1);
         }
     }
 
     ConfigInfo->MaximumTransferLength = ConfigInfo->NumberOfPhysicalBreaks * PAGE_SIZE;
+    if (ConfigInfo->MaximumTransferLength == 0) {
+        RhelDbgPrint(TRACE_LEVEL_FATAL, "ConfigInfo->MaximumTransferLength is zero\n");
+        return SP_RETURN_ERROR;
+    }
     ConfigInfo->NumberOfPhysicalBreaks++;
     adaptExt->max_tx_length = ConfigInfo->MaximumTransferLength;
 
